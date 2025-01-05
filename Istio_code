@@ -1,0 +1,18 @@
+#istio_code
+curl -L https://istio.io/downloadIstio | sh -
+cd istio-<version>
+export PATH=$PWD/bin:$PATH
+
+#install
+istioctl install --set profile=demo -y
+
+#injection_enabled
+kubectl label namespace <namespace> istio-injection=enabled
+
+
+kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
+
+#expose via this gateway
+kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
+kubectl get gateway
+
